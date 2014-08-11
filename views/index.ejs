@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Contact List</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1>My Contacts [<%=selectedIndex%>]</h1>
+
+    <form id="create" action="/" method="post">
+        <input id="name" class="js-name" name="name" required placeholder="Name" />
+        <input id="number" name="number" required placeholder="Number" />
+        <input type="submit" value="Create" />
+    </form>
+
+    <ul class="index">
+        <% for(var i=0; i<index.length; i++) { %>
+            <li class="<%=selectedIndex==index[i] ? 'selected' : ''%>" >
+                <a href="/?index=<%=index[i]%>">
+                    <%= index[i] %>
+                </a>
+            </li>
+        <% } %>
+    </ul>
+
+    <% if(list.length == 0) { %>
+        <div class="empty-case">
+            No Contact Exists
+        </div>
+    <% } %>
+
+    <% if(list.length > 0) { %>
+        <ul>
+            <% for(i=0; i < list.length; i++) { %>
+                <li>
+                    <%= list[i].name %>:
+                    <%= list[i].number %>
+                </li>
+            <% } %>
+        </ul>
+
+        <% if(list.pagination.pages.length > 1) { %>
+            <%- list.pagination.render({ baseUrl: '/?index='+selectedIndex
+            }) %>
+        <% } %>
+    <% } %>
+
+    <script type="text/javascript" src="/javascripts/main.js"></script>
+  </body>
+</html>
